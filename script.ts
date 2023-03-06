@@ -22,7 +22,7 @@ class Concat implements Glob {
 }
 
 abstract class ExtGlob implements Glob {
-    abstract modifier: String;
+    protected abstract modifier: String;
     
     private globs: Glob[]
     constructor(...globs: Glob[]) {
@@ -37,16 +37,16 @@ abstract class ExtGlob implements Glob {
 }
 
 class Or extends ExtGlob {
-    modifier: String = '@';
+    protected modifier: String = '@';
 }
 class OneOrMore extends ExtGlob {
-    modifier: String = '+';
+    protected modifier: String = '+';
 }
 class ZeroOrMore extends ExtGlob {
-    modifier: String = '*';
+    protected modifier: String = '*';
 }
 class ZeroOrOne extends ExtGlob {
-    modifier: String = '?';
+    protected modifier: String = '?';
 }
 
 const dot = new Raw(".")
@@ -55,9 +55,10 @@ const plus = new Raw("+")
 const letter = new Raw("[a-zA-Z]");
 const positiveDigit = new Raw("[1-9]");
 const digit = new Raw("[0-9]");
+const zero = new Raw("0")
 const nonDigit = new Or(dash, letter);
 const identifierCharacter = new Raw("[a-zA-Z0-9-]");
-const numericIdentifier = new Or(new Raw("0"), new Concat(positiveDigit, new ZeroOrMore(digit)))
+const numericIdentifier = new Or(zero, new Concat(positiveDigit, new ZeroOrMore(digit)))
 const alphanumericIdentifier = new Concat(new ZeroOrMore(identifierCharacter), nonDigit, new ZeroOrMore(identifierCharacter))
 const buildIdentifier = new Or(alphanumericIdentifier, new OneOrMore(digit));
 const prereleaseIdentifier = new Or(alphanumericIdentifier, numericIdentifier)
@@ -71,6 +72,6 @@ const major = numericIdentifier;
 const versionCore = new Concat(major, dot, minor, dot, patch);
 const validSemVer = new Concat(versionCore, new ZeroOrOne(new Concat(dash, preRelease)), new ZeroOrOne(new Concat(plus, build)));
 
-console.log(validSemVer.toString())
+console.log("validSemVer:\n", validSemVer.toString())
 
-console.log(validSemVer.toString().length)
+console.log("length: ", validSemVer.toString().length)
