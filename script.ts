@@ -58,7 +58,7 @@ const digit = new Raw("[0-9]");
 const nonDigit = new Or(dash, letter);
 const identifierCharacter = new Raw("[a-zA-Z0-9-]");
 const numericIdentifier = new Or(new Raw("0"), new Concat(positiveDigit, new ZeroOrMore(digit)))
-const alphanumericIdentifier = new Or(new Concat(nonDigit, new ZeroOrMore(identifierCharacter)), new Concat(new OneOrMore(identifierCharacter), nonDigit, new ZeroOrMore(identifierCharacter)));
+const alphanumericIdentifier = new Concat(new ZeroOrMore(identifierCharacter), nonDigit, new ZeroOrMore(identifierCharacter))
 const buildIdentifier = new Or(alphanumericIdentifier, new OneOrMore(digit));
 const prereleaseIdentifier = new Or(alphanumericIdentifier, numericIdentifier)
 const dotSeparatedBuildIdentifier = new Concat(buildIdentifier, new ZeroOrMore(new Concat(dot, buildIdentifier)));
@@ -69,7 +69,7 @@ const patch = numericIdentifier;
 const minor = numericIdentifier;
 const major = numericIdentifier;
 const versionCore = new Concat(major, dot, minor, dot, patch);
-const validSemVer = new Concat(versionCore, new ZeroOrOne(new Or(new Concat(dash, preRelease, new ZeroOrOne(new Concat(plus, build))),new Concat(plus, build))));
+const validSemVer = new Concat(versionCore, new ZeroOrOne(new Concat(dash, preRelease)), new ZeroOrOne(new Concat(plus, build)));
 
 console.log(validSemVer.toString())
 
