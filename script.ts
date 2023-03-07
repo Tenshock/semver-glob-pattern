@@ -1,11 +1,11 @@
 interface Glob {
-    toString(): string;
+    get(): string;
 }
 
 class Raw implements Glob {
     constructor(private value: string) {}
 
-    public toString(): string {
+    public get(): string {
         return this.value
     }
 }
@@ -16,8 +16,8 @@ class Concat implements Glob {
         this.globs = identifier;
     }
 
-    public toString(): string {
-        return this.globs.map(glob => glob.toString()).join("")
+    public get(): string {
+        return this.globs.map(glob => glob.get()).join("")
     }
 }
 
@@ -29,8 +29,8 @@ abstract class ExtGlob implements Glob {
         this.globs = globs;
     }
 
-    public toString(): string {
-        const joinedGlobs = this.globs.map(glob => glob.toString()).join("|");
+    public get(): string {
+        const joinedGlobs = this.globs.map(glob => glob.get()).join("|");
 
         return `${this.modifier}(${joinedGlobs})` 
     }
@@ -60,9 +60,8 @@ const nonDigit = new Or(dash, letter);
 const identifierCharacter = new Raw("[a-zA-Z0-9-]");
 const numericIdentifier = new Or(zero, new Concat(positiveDigit, new ZeroOrMore(digit)))
 const alphanumericIdentifier = new Concat(new ZeroOrMore(identifierCharacter), nonDigit, new ZeroOrMore(identifierCharacter))
-const buildIdentifier = new Or(alphanumericIdentifier, new OneOrMore(digit));
 const prereleaseIdentifier = new Or(alphanumericIdentifier, numericIdentifier)
-const dotSeparatedBuildIdentifier = new Concat(buildIdentifier, new ZeroOrMore(new Concat(dot, buildIdentifier)));
+const dotSeparatedBuildIdentifier = new Concat(new OneOrMore(identifierCharacter), new ZeroOrMore(new Concat(dot, new OneOrMore(identifierCharacter))));
 const build = dotSeparatedBuildIdentifier;
 const dotSeparatedPreReleaseIdentifier = new Concat(prereleaseIdentifier, new ZeroOrMore(new Concat(dot, prereleaseIdentifier)));
 const preRelease = dotSeparatedPreReleaseIdentifier;
@@ -72,6 +71,5 @@ const major = numericIdentifier;
 const versionCore = new Concat(major, dot, minor, dot, patch);
 const validSemVer = new Concat(versionCore, new ZeroOrOne(new Concat(dash, preRelease)), new ZeroOrOne(new Concat(plus, build)));
 
-console.log("validSemVer:\n", validSemVer.toString())
-
-console.log("length: ", validSemVer.toString().length)
+console.log("validSemVer:\n", validSemVer.get())
+console.log("length: ", validSemVer.get().length)

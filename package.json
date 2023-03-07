@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npx tsc; node script.js"
+    "generate": "npx tsc; node script.js"
   },
   "author": "",
   "license": "ISC",

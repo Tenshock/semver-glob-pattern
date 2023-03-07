@@ -1,6 +1,6 @@
 # Glob pattern for semver
 
-**TL;DR**: here is the glob pattern: `@(0|[1-9]*([0-9])).@(0|[1-9]*([0-9])).@(0|[1-9]*([0-9]))?(-@(*([a-zA-Z0-9-])@(-|[a-zA-Z])*([a-zA-Z0-9-])|@(0|[1-9]*([0-9])))*(.@(*([a-zA-Z0-9-])@(-|[a-zA-Z])*([a-zA-Z0-9-])|@(0|[1-9]*([0-9])))))?(+@(*([a-zA-Z0-9-])@(-|[a-zA-Z])*([a-zA-Z0-9-])|+([0-9]))*(.@(*([a-zA-Z0-9-])@(-|[a-zA-Z])*([a-zA-Z0-9-])|+([0-9]))))`
+**TL;DR**: here is the glob pattern: `@(0|[1-9]*([0-9])).@(0|[1-9]*([0-9])).@(0|[1-9]*([0-9]))?(-@(*([a-zA-Z0-9-])@(-|[a-zA-Z])*([a-zA-Z0-9-])|@(0|[1-9]*([0-9])))*(.@(*([a-zA-Z0-9-])@(-|[a-zA-Z])*([a-zA-Z0-9-])|@(0|[1-9]*([0-9])))))?(++([a-zA-Z0-9-])*(.+([a-zA-Z0-9-])))`
 
 This project aims to detect precisely versions following [semver 2.0](https://semver.org/). The generation code is based on [Backusnaur form grammar](https://semver.org/#backusnaur-form-grammar-for-valid-semver-versions) defined in semver 2.0.
 
@@ -11,7 +11,7 @@ A complete test can be found at [Glob Tool](https://www.digitalocean.com/communi
 In order to test locally, run the following commands:
 ```bash
 npm install
-npm start
+npm generate
 ```
 
-Feel free to improve the generation, as the glob pattern currently is *312 characters* long.
+Feel free to improve the generation, as the glob pattern currently is *232 characters* long.
