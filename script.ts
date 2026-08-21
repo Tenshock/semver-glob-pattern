@@ -52,7 +52,6 @@ class ZeroOrOne extends ExtGlob {
 const dot = new Raw(".")
 const dash = new Raw("-")
 const plus = new Raw("+")
-const letter = new Raw("[a-zA-Z]");
 const positiveDigit = new Raw("[1-9]");
 const digit = new Raw("[0-9]");
 const zero = new Raw("0")

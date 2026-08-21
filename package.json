@@ -1,14 +1,21 @@
 {
   "name": "blob-semver",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Generate a glob pattern matching Semantic Versioning 2.0 versions",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "generate": "npx tsc; node script.js"
+    "build": "tsc",
+    "generate": "tsx script.ts"
   },
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": ">=26"
+  },
   "devDependencies": {
-    "typescript": "^4.9.5"
+    "@types/node": "^26.2.0",
+    "tsx": "^4.23.12",
+    "typescript": "^7.0.2"
   }
 }

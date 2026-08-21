@@ -11,7 +11,7 @@ A complete test can be found at [Glob Tool](https://www.digitalocean.com/communi
 In order to test locally, run the following commands:
 ```bash
 npm install
-npm generate
+npm run generate
 ```
 
 Feel free to improve the generation, as the glob pattern currently is *210 characters* long.
