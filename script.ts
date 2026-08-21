@@ -22,11 +22,15 @@ class Concat implements Glob {
 }
 
 abstract class ExtGlob implements Glob {
-    protected abstract modifier: String;
+    protected abstract modifier: string;
     
-    private globs: Glob[]
+    private readonly globs: Glob[]
     constructor(...globs: Glob[]) {
         this.globs = globs;
+    }
+
+    public getGlobs(): readonly Glob[] {
+        return this.globs;
     }
 
     public get(): string {
@@ -37,16 +41,27 @@ abstract class ExtGlob implements Glob {
 }
 
 class Or extends ExtGlob {
-    protected modifier: String = '@';
+    protected modifier: string = '@';
+
+    constructor(...globs: Glob[]) {
+        super(
+            ...globs.reduce<Glob[]>(
+                (flattened, glob) => flattened.concat(
+                    glob instanceof Or ? glob.getGlobs() : glob
+                ),
+                []
+            )
+        );
+    }
 }
 class OneOrMore extends ExtGlob {
-    protected modifier: String = '+';
+    protected modifier: string = '+';
 }
 class ZeroOrMore extends ExtGlob {
-    protected modifier: String = '*';
+    protected modifier: string = '*';
 }
 class ZeroOrOne extends ExtGlob {
-    protected modifier: String = '?';
+    protected modifier: string = '?';
 }
 
 const dot = new Raw(".")
