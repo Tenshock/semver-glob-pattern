@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "generate": "tsx script.ts"
+    "generate": "tsx generate.ts",
+    "test": "tsx --test script.spec.ts"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +16,8 @@
   },
   "devDependencies": {
     "@types/node": "^26.2.0",
+    "@types/picomatch": "^4.0.3",
+    "picomatch": "^4.0.5",
     "tsx": "^4.23.12",
     "typescript": "^7.0.2"
   }
